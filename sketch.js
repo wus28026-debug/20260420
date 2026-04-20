@@ -14,7 +14,12 @@ function draw() {
   let x = (width - videoWidth) / 2;
   let y = (height - videoHeight) / 2;
 
-  image(capture, x, y, videoWidth, videoHeight);
+  // 處理左右顛倒（鏡像）
+  push();
+  translate(x + videoWidth, y); // 移動到影像右上角
+  scale(-1, 1);                // 水平翻轉
+  image(capture, 0, 0, videoWidth, videoHeight);
+  pop();
 }
 
 function windowResized() {
