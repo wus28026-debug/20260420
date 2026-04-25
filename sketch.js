@@ -27,9 +27,11 @@ function draw() {
   pg.clear();
   if (capture.width > 0) {
     capture.loadPixels();
-    pg.textAlign(CENTER, CENTER);
-    pg.textSize(8);
+    pg.noStroke();
     let step = 20; // 以 20x20 為一個單位
+
+    // 計算馬賽克方塊在畫布上的實際寬高
+    let rectSize = (step / capture.width) * pg.width;
 
     for (let yGrid = 0; yGrid < capture.height; yGrid += step) {
       for (let xGrid = 0; xGrid < capture.width; xGrid += step) {
@@ -43,8 +45,9 @@ function draw() {
         let drawX = map(capture.width - xGrid, 0, capture.width, 0, pg.width);
         let drawY = map(yGrid, 0, capture.height, 0, pg.height);
 
-        pg.fill(0); // 使用黑色文字顯示數值
-        pg.text(avg, drawX, drawY);
+        pg.fill(r, g, b); // 使用像素原始顏色填充
+        pg.rectMode(CENTER);
+        pg.rect(drawX, drawY, rectSize, rectSize);
       }
     }
   }
